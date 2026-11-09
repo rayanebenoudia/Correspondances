@@ -1,3 +1,4 @@
+
 package correspondances.generator;
 
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +17,7 @@ public class DataGenerator implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
+        // Générer les gares
         Integer count = jdbcTemplate.queryForObject(
             "SELECT COUNT(*) FROM station",
             Integer.class
@@ -36,6 +38,24 @@ public class DataGenerator implements CommandLineRunner {
             jdbcTemplate.update(
                 "INSERT INTO station (name, city, code) VALUES (?, ?, ?)",
                 "Avignon Centre", "Avignon", "AVC"
+            );
+        }
+
+        Integer lineCount = jdbcTemplate.queryForObject(
+            "SELECT COUNT(*) FROM railway_line",
+            Integer.class
+        );
+
+        if (lineCount != null && lineCount == 0) {
+
+            jdbcTemplate.update(
+                "INSERT INTO railway_line (name, code) VALUES (?, ?)",
+                "Ligne Marseille - Aix-en-Provence", "L1"
+            );
+
+            jdbcTemplate.update(
+                "INSERT INTO railway_line (name, code) VALUES (?, ?)",
+                "Ligne Marseille - Avignon", "L2"
             );
         }
     }
