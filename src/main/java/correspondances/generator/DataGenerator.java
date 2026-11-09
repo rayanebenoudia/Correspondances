@@ -17,7 +17,6 @@ public class DataGenerator implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        // Générer les gares
         Integer count = jdbcTemplate.queryForObject(
             "SELECT COUNT(*) FROM station",
             Integer.class
